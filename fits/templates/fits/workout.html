@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout</title>
+</head>
+
+{% extends 'fits/base.html' %}
+
+{% block header %}
+  <h3>Workout on {{ workout.date_workout }}</h3>
+{% endblock header %}
+
+<body>
+
+{% block content %}
+
+  <h3>Type of workout: {{ workout.text }}</h3>
+  <h3>Duration of workout: {{ workout.duration }}</h3>
+  <h3><a href='{% url "fits:edit_workout" workout.id %}'>Edit the workout</a></h3>
+
+{% endblock content %}
+
+</body>
+</html>

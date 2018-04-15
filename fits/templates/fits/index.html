@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>I'm fit!</title>
+</head>
+<body>
+    {% extends 'fits/base.html' %}
+
+    {% block header %}
+      <div class="jumbotron">
+          <h1>
+              {% if user.is_authenticated %}
+                  My goal: {{ goal }}
+              {% else %}
+                  Be fit!
+              {% endif %}
+          </h1>
+      </div>
+    {% endblock header %}
+
+    {% block content %}
+      <h2>
+          {% if user.is_authenticated %}
+            Hello, {{ user.username }}!
+          {% else %}
+          I'm fit is used to keep a training diary.
+            <a href="{% url 'users:register' %}">Register</a> to use the app I'm fit.
+          {% endif %}
+      </h2>
+    {% endblock content %}
+</body>
+</html>

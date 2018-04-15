@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My workouts</title>
+</head>
+
+{% extends 'fits/base.html' %}
+
+{% block header %}
+
+  <h1>My workouts:</h1>
+
+{% endblock header %}
+
+<body>
+
+{% block content %}
+  <ul>
+      {% for workout in my_workouts %}
+        <li>
+            <h3>
+                <a href="{% url 'fits:workout' workout.id %}">{{ workout }}</a>
+            </h3>
+        </li>
+      {% empty %}
+        <li>You have not added any workout yet.</li>
+      {% endfor %}
+  </ul>
+  <h3><a href="{% url 'fits:add_workout' %}">Add a workout</a></h3>
+{% endblock content %}
+
+
+</body>
+</html>
