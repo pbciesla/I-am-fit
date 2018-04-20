@@ -6,8 +6,8 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Workout, Goal
-from .forms import WorkoutForm, GoalForm
+from .models import Workout, Goal, Weight
+from .forms import WorkoutForm, GoalForm, WeightForm
 
 
 def index(request):
@@ -83,3 +83,25 @@ def edit_goal(request):
             return HttpResponseRedirect(reverse('fits:goal'))
     context = {'goal': goal, 'form': form}
     return render(request, 'fits/edit_goal.html', context)
+
+
+@login_required
+def weight(request):
+    my_weight = Weight.objects.filter(owner=request.user).order_by('-date_added')
+    context = {'my_weight': my_weight}
+    return render(request, 'fits/my_weight.html', context)
+
+
+@login_required
+def add_weight(request):
+    if request.method != "POST":
+        form = WeightForm()
+    else:
+        form = WeightForm(request.POST)
+        if form.is_valid():
+            new_weight = form.save(commit=False)
+            new_weight.owner = request.user
+            new_weight.save()
+            return HttpResponseRedirect(reverse('fits:my_weight'))
+    context = {'form': form}
+    return render(request, 'fits/add_weight.html', context)

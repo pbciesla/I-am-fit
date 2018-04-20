@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My weight</title>
+</head>
+
+{% extends 'fits/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+
+  <h1>My weight:</h1>
+
+{% endblock header %}
+
+<body>
+
+{% block content %}
+  <ul>
+      {% for weight in my_weight %}
+        <li>
+            <h3>
+                {{ weight }}
+            </h3>
+        </li>
+      {% empty %}
+        <li>You have not added your weight yet.</li>
+      {% endfor %}
+  </ul>
+  <h3><a href="{% url 'fits:add_weight' %}">Add your actually weight.</a></h3>
+{% endblock content %}
+
+</body>
+</html>

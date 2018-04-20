@@ -32,7 +32,6 @@ class Workout(models.Model):
     )
     text = models.CharField(max_length=3, choices=workout_type)
     date_added = models.DateTimeField(auto_now_add=True)
-    # date_workout = models.CharField(max_length=10)
     date_workout = models.DateTimeField()
     duration = models.IntegerField()
     owner = models.ForeignKey(User)
@@ -42,6 +41,15 @@ class Workout(models.Model):
 
     def __unicode__(self):
         return unicode(self.date_workout)
+
+
+class Weight(models.Model):
+    date_added = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(User)
+    value = models.FloatField()
+
+    def __str__(self):
+        return str(self.value)
 
 
 #class WorkoutDetails(models.Model):
