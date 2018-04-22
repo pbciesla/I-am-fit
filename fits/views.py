@@ -88,7 +88,13 @@ def edit_goal(request):
 @login_required
 def weight(request):
     my_weight = Weight.objects.filter(owner=request.user).order_by('-date_added')
-    context = {'my_weight': my_weight}
+    weights_list = []
+    date_list = []
+    for weights in my_weight:
+        weights_list.append(weights.value)
+        # date_list.append(weights.date_added.strftime('%Y-%m-%d'))
+        # TODO: Date added in label of weight chart.
+    context = {'my_weight': weights_list, 'my_weight_obj': my_weight}
     return render(request, 'fits/my_weight.html', context)
 
 
