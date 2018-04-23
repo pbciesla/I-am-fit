@@ -92,9 +92,8 @@ def weight(request):
     date_list = []
     for weights in my_weight:
         weights_list.append(weights.value)
-        # date_list.append(weights.date_added.strftime('%Y-%m-%d'))
-        # TODO: Date added in label of weight chart.
-    context = {'my_weight': weights_list, 'my_weight_obj': my_weight}
+        date_list.append(weights.date_added.strftime('%Y-%m-%d'))
+    context = {'my_weight': weights_list, 'my_weight_date_added': date_list}
     return render(request, 'fits/my_weight.html', context)
 
 

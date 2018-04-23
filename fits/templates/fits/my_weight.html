@@ -6,30 +6,39 @@
 </head>
 
 {% extends 'fits/base.html' %}
-{% load bootstrap3 %}
 
-{% block header %}
-
-  <h1>My weight:</h1>
-
-{% endblock header %}
-
-<body>
+{% block extrahead %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$( document ).ready(function() {
+    var data = {
+        labels: {{ my_weight_date_added|safe }},
+        datasets: [
+            {
+                label: "My weight",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: {{ my_weight }}
+            }
+        ]
+    };
+    var ctx = document.getElementById("myChart").getContext("2d");
+    console.log(data);
+    var myLineChart = new Chart(ctx).Line(data);
+});
+</script>
+{% endblock %}
 
 {% block content %}
-  <ul>
-      {% for weight in my_weight %}
-        <li>
-            <h3>
-                {{ weight }}
-            </h3>
-        </li>
-      {% empty %}
-        <li>You have not added your weight yet.</li>
-      {% endfor %}
-  </ul>
-  <h3><a href="{% url 'fits:add_weight' %}">Add your actually weight.</a></h3>
-{% endblock content %}
+  <canvas id="myChart" width="500" height="300"></canvas>
 
-</body>
+  <h3><a href="{% url 'fits:add_weight' %}">Add your actually weight.</a></h3>
+{% endblock %}
+
+
 </html>
