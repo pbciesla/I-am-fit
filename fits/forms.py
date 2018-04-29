@@ -1,15 +1,18 @@
 from django import forms
 
-# from bootstrap3_datepicker.widgets import DatePickerInput
 from .models import Workout, Goal, Weight
 
-class WorkoutForm(forms.ModelForm):
-  #  date_workout = forms.DateField(widget=DatePickerInput())
 
+class DateTimeInput(forms.DateTimeInput):
+    input_type = 'date'
+
+
+class WorkoutForm(forms.ModelForm):
     class Meta:
         model = Workout
         fields = ['text', 'date_workout', 'duration']
-        labels = {'text': 'Kind of workout', 'date_workout': 'Date of workout (YYYY-MM-DD)', 'duration': 'duration (in minutes)'}
+        widgets = {'date_workout': DateTimeInput()}
+        labels = {'text': 'Kind of workout', 'date_workout': 'Date of workout', 'duration': 'duration (in minutes)'}
 
 
 class GoalForm(forms.ModelForm):
@@ -23,4 +26,4 @@ class WeightForm(forms.ModelForm):
     class Meta:
         model = Weight
         fields = ['value']
-        labels = {'value': 'My today weight'}
+        labels = {'value': 'My current weight'}

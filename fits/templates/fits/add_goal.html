@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Change goal</title>
+    <title>My goal</title>
 </head>
-<body>
+
 {% extends 'fits/base.html' %}
 {% load bootstrap3 %}
 
 {% block header %}
-<h3>Change the goal:</h3>
+<h2>Add your goal:</h2>
 {% endblock header %}
 
+<body>
+
 {% block content %}
-<form action="{% url 'fits:edit_goal' %}" method="post" class="form">
+
+<form action="{% url 'fits:add_goal' %}" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
 
     {% buttons %}
     <button name="submit" class="btn btn-primary">Submit</button>
     {% endbuttons %}
-
 </form>
+
 {% endblock content %}
 
 </body>

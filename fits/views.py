@@ -12,7 +12,11 @@ from .forms import WorkoutForm, GoalForm, WeightForm
 
 def index(request):
     """Main page"""
-    context = {'goal': Goal.objects.get(pk=1)}
+    if request.user.is_authenticated() and Goal.objects.filter(owner=request.user):
+        goals = Goal.objects.filter(owner=request.user).order_by('date_added')
+        context = {'goal': goals[0]}
+    else:
+        context = {'goal': "Goal isn't added yet."}
     return render(request, 'fits/index.html', context)
 
 
@@ -65,11 +69,30 @@ def edit_workout(request, workout_id):
 # TODO create a goal
 @login_required
 def goal(request):
-    goals = Goal.objects.filter(owner=request.user).order_by('date_added')
-    context = {'goal': goals[0]}
+    if Goal.objects.filter(owner=request.user):
+        goals = Goal.objects.filter(owner=request.user).order_by('date_added')
+        context = {'goal': goals[0]}
+    else:
+        context = {'goal': "Goal isn't added yet."}
     return render(request, 'fits/goal.html', context)
 
 
+@login_required
+def add_goal(request):
+    if request.method != "POST":
+        form = GoalForm()
+    else:
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.owner = request.user
+            goal.save()
+            return HttpResponseRedirect(reverse('fits:goal'))
+    context = {'form': form}
+    return render(request, 'fits/add_goal.html', context)
+
+
+@login_required
 def edit_goal(request):
     goal = Goal.objects.filter(owner=request.user).order_by('date_added')[0]
     if request.method != 'POST':
@@ -89,11 +112,11 @@ def edit_goal(request):
 def weight(request):
     my_weight = Weight.objects.filter(owner=request.user).order_by('-date_added')
     weights_list = []
-    date_list = []
+    dates_list = []
     for weights in my_weight:
         weights_list.append(weights.value)
-        date_list.append(weights.date_added.strftime('%Y-%m-%d'))
-    context = {'my_weight': weights_list, 'my_weight_date_added': date_list}
+        dates_list.append(weights.date_added.strftime('%Y-%m-%d'))
+    context = {'my_weight': weights_list, 'my_weight_dates_added': dates_list}
     return render(request, 'fits/my_weight.html', context)
 
 

@@ -10,6 +10,7 @@
 
 {% block content %}
 <h2>My goal: {{ goal }}</h2>
+<h3><a href="{% url 'fits:add_goal' %}">Add a goal</a></h3>
 <h3><a href="{% url 'fits:edit_goal' %}">Change the goal</a></h3>
 {% endblock content %}
 
