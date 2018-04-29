@@ -9,9 +9,15 @@
 <body>
 
 {% block content %}
-<h2>My goal: {{ goal }}</h2>
-<h3><a href="{% url 'fits:add_goal' %}">Add a goal</a></h3>
-<h3><a href="{% url 'fits:edit_goal' %}">Change the goal</a></h3>
+
+{% if goal %}
+    <h2>My goal: {{ goal }}</h2>
+    <h3><a href="{% url 'fits:edit_goal' %}">Change the goal</a></h3>
+{% else %}
+    <h2>Goal isn't added yet.</h2>
+    <h3><a href="{% url 'fits:add_goal' %}">Add a goal</a></h3>
+{% endif %}
+
 {% endblock content %}
 
 
