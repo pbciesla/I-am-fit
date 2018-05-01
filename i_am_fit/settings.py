@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'fits',
     'users',
     'bootstrap3',
+
 ]
 
 MIDDLEWARE = [

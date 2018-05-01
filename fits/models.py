@@ -40,7 +40,7 @@ class Workout(models.Model):
         return self.get_workout_type_display()
 
     def __unicode__(self):
-        return unicode(self.date_workout)
+        return unicode(self.date_workout.strftime('%d-%m-%Y'))
 
 
 class Weight(models.Model):
@@ -50,16 +50,3 @@ class Weight(models.Model):
 
     def __str__(self):
         return str(self.value)
-
-
-#class WorkoutDetails(models.Model):
- #   workout_type = models.ForeignKey(Workout)
-  #  name = models.CharField(max_length=200)
-   # distance = models.FloatField()
-    #repetitions = models.IntegerField()
-    #weight = models.IntegerField()
-
-  #  def __unicode__(self):
-   #     return self.name
-
-
