@@ -73,7 +73,8 @@ def goal(request):
         goals = Goal.objects.filter(owner=request.user).order_by('date_added')
         context = {'goal': goals[0]}
     else:
-        context = {'goal': "Goal isn't added yet."}
+        context = {'goal': ''}
+        # context = {'goal': "Goal isn't added yet."}
     return render(request, 'fits/goal.html', context)
 
 
